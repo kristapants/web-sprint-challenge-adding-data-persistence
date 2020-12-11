@@ -1,13 +1,14 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('projects').truncate()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('projects').insert([
+        {name: 'The Big Merger', description: 'Merger with Big Corp.', completed: true},
+        {name: 'Sales presentation', description: 'Impress them goodly', completed: false},
+        {name: 'Remodel east wing', description: 'Those meeting rooms should look client ready', completed: false}
       ]);
     });
+    
 };
