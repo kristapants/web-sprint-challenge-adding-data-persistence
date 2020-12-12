@@ -2,7 +2,9 @@
 const db = require('../../data/dbConfig.js');
 
 module.exports = {
-  get
+  get,
+  getById,
+  post
 };
 
 function get() {
@@ -14,4 +16,31 @@ function get() {
               }
           })
       })
+}
+
+function getById() {
+  return db('projects')
+    .where('resources.id', id)
+    .first()
+    .then(projects => {
+      return projects.map(project => {
+        return {
+          ...project,
+          completed: project.completed === 1 ? true : false
+        }
+      })
+    })
+}
+
+
+async function post(project) {
+  const newId = await db('projects').insert(project);
+  return db('projects').where('id', newId)
+  .then(projects => {
+      return projects.map(project =>  {
+          return {...project,
+              completed: project.completed ===  1 ? true : false
+          }
+      })
+  })
 }
