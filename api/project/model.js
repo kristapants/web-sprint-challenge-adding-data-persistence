@@ -18,7 +18,7 @@ function get() {
       })
 }
 
-function getById() {
+function getById(id) {
   return db('projects')
     .where('resources.id', id)
     .first()

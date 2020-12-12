@@ -16,4 +16,20 @@ router.get("/", (req, res) => {
       });
 });
 
+router.post('/', (req, res) => {
+  if(!req.body.description || !req.body.project_id) {
+      res.status(400).json({ message: 'Task must have a description and project id' });
+  }
+  else {
+      const newTask = req.body;
+      Task.post(newTask)
+          .then(task => {
+              res.status(201).json(task[0]);
+          })
+          .catch(err => {
+              res.status(500).json({ message: err.message });
+          });
+  }
+});
+
 module.exports = router;
